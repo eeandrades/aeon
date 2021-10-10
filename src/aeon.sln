@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aeon.Notifications", "Aeon.Notifications\Aeon.Notifications.csproj", "{804418C4-DE12-42C4-94BD-91FC2D99EA6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aeon.Notifications.Tests", "Aeon.Notifications.Tests\Aeon.Notifications.Tests.csproj", "{6AB326BE-05EB-421A-8C11-EA923AB51FCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{804418C4-DE12-42C4-94BD-91FC2D99EA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804418C4-DE12-42C4-94BD-91FC2D99EA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804418C4-DE12-42C4-94BD-91FC2D99EA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804418C4-DE12-42C4-94BD-91FC2D99EA6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AB326BE-05EB-421A-8C11-EA923AB51FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AB326BE-05EB-421A-8C11-EA923AB51FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AB326BE-05EB-421A-8C11-EA923AB51FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AB326BE-05EB-421A-8C11-EA923AB51FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B7BA860-3947-40F6-A866-8EEC020F612C}
+	EndGlobalSection
+EndGlobal
