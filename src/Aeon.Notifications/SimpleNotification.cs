@@ -1,21 +1,20 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Aeon.Notifications
 {
-    internal record SimpleNotification(string Message, INotificationLevel Level, params object[] Parameters) : INotification
+    public record SimpleNotification(string templateMessage, INotificationLevel Level, object Context = default) : INotification
     {
+        string INotification.Message { get; } = MessageFormatter.Format(templateMessage, Context);
+
         INotificationLevel INotification.Level => this.Level;
 
-        public object GetContext()
+        string INotification.Code => string.Empty;
+
+        object INotification.GetContext()
         {
-            return this.Parameters;
+            return this.Context ?? new { };
         }
 
-        string INotification.FormatMessage()
-        {
-            return string.Format(this.Message, Parameters);
-        }
+        string INotification.FormattedMessage => $"{(this as INotification).Message}";
     }
 }

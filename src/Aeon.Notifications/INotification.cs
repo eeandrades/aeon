@@ -2,8 +2,11 @@
 {
     public interface INotification
     {
-        string FormatMessage();
         INotificationLevel Level { get; }
+
+        string Code { get; }
+        string Message { get; }
+        string FormattedMessage { get; }
         object GetContext();
     }
 }

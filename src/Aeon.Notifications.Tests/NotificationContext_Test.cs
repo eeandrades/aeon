@@ -6,7 +6,7 @@ namespace Aeon.Notifications.Tests
     [TestClass]
     public class NotificationContext_Test
     {
-        INotificationContext _notificatonContext = new DefaultNotificationContext();
+        readonly INotificationContext _notificatonContext = new DefaultNotificationContext();
 
         private INotificationLevel CreateLevel(bool isValid)
         {
@@ -28,13 +28,6 @@ namespace Aeon.Notifications.Tests
 
             return mockNotification.Object;
         }
-
-
-        INotificationLevel GetErrorLevel()
-        {
-            return NotificationLevels.Info;
-        }
-
 
         [TestMethod]
         public void NotificationContext_When_HasInvalid()
@@ -84,11 +77,13 @@ namespace Aeon.Notifications.Tests
         public void NotificationContext_When_WithRange_AllIsValid()
         {
             var validLevel = this.CreateLevel(true);
-
-            this._notificatonContext.Notify(this.CreateNotification(validLevel));
-            this._notificatonContext.Notify(this.CreateNotification(validLevel));
-            this._notificatonContext.Notify(this.CreateNotification(validLevel));
-
+            var notifications = new[]
+            {
+                this.CreateNotification(validLevel),
+                this.CreateNotification(validLevel),
+                this.CreateNotification(validLevel)
+            };
+            this._notificatonContext.Notify(notifications);
             Assert.IsTrue(!_notificatonContext.IsInvalid && this._notificatonContext.IsValid);
         }
     }

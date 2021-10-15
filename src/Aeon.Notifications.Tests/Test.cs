@@ -1,32 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aeon.Notifications.Tests
 {
-    public class Messages
-    {
-        public record BusinessMessage(string Code, string Message, INotificationLevel Level)
-            : INotification
-        {
-            INotificationLevel INotification.Level => this.Level;
 
-            string INotification.FormatMessage()
-            {
-                return ($"{this.Level.Description}-{this.Code}-{this.Message}");
-            }
+    public record ClientNotFountMessage(int ClientId, string Nome)
+        : CustomNotification(1, "ClientId = {ClientId}, Nome={Nome}", NotificationLevels.Error);
 
-            object INotification.GetContext()
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
-        public static BusinessMessage ClienteNaoEncontrado = new BusinessMessage("ERR-001", "Cliente nao encontrado {IdCliente}", NotificationLevels.Error);
-    }
+    public record DuplicatedClientNotification(int ClientId, string Nome)
+    : CustomNotification(2, "ClientId = {ClientId}, Nome={Nome}", NotificationLevels.Error);
 
     public class InviteClientHandler
     {
@@ -42,9 +24,28 @@ namespace Aeon.Notifications.Tests
 
         public void Execute()
         {
+            this._notificationContext.Notify(new ClientNotFountMessage(1, "Emerson"));
+            this._notificationContext.Notify(new DuplicatedClientNotification(2, "Moby Dick"));
+        }
+    }
 
+    [TestClass]
+    public class Test
+    {
+        [TestMethod]
+        public void Exec()
+        {
+            INotificationContext notificationContext = new DefaultNotificationContext();
+            var invite = new InviteClientHandler(notificationContext);
 
-            this._notificationContext.Notify();
+            invite.Execute();
+
+            Assert.IsTrue(notificationContext.IsInvalid && notificationContext.Notifications.Any(n => n is ClientNotFountMessage));
+
+            foreach (var not in notificationContext.Notifications)
+            {
+                System.Console.WriteLine(not.FormattedMessage);
+            }
         }
     }
 }
