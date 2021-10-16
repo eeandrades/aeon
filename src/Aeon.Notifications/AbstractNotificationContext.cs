@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Aeon.Notifications
@@ -8,20 +9,34 @@ namespace Aeon.Notifications
         private readonly List<INotification> _notifications = new();
         private bool _isValid = true;
 
-        private static bool CheckValid(bool isValid, INotification[] notifications)
+        protected AbstractNotificationContext(IEnumerable<Listners.INotificationListner> listners)
         {
-            bool hasNotInvalid() => !notifications.Any(n => !n.Level.IsValid);
-            return  isValid && hasNotInvalid();
+            this.Listners = listners;
+        }
+        private void PostListners(INotification notification)
+        {
+            foreach (var listner in this.Listners)
+            {
+                listner.Write(notification);
+            }
+        }
+        public IEnumerable<Listners.INotificationListner> Listners { get; }
+
+        private static bool CheckValid(bool isValid, INotification notification)
+        {
+            return isValid && notification.Level.IsValid;
         }
 
-        void INotificationContext.Notify(params INotification[] notifications)
+        void INotificationContext.Notify(INotification notification)
         {
-            if (notifications == null || notifications.Length == 0)
+            if (notification is null)
             {
-                return;
+                throw new ArgumentNullException(nameof(notification));
             }
-            this._isValid = CheckValid(this._isValid, notifications);
-            this._notifications.AddRange(notifications);
+            this._isValid = CheckValid(this._isValid, notification);
+            this._notifications.Add(notification);
+
+            this.PostListners(notification);
         }
 
         bool INotificationContext.IsValid => this._isValid;

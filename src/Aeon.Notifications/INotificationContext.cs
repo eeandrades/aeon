@@ -5,7 +5,7 @@ namespace Aeon.Notifications
     public interface INotificationContext
     {
         IEnumerable<INotification> Notifications { get; }
-        void Notify(params INotification[] notifications);
+        void Notify(INotification notification);
 
         bool IsValid { get; }
 

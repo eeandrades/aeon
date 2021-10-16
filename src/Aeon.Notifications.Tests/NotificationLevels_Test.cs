@@ -39,8 +39,7 @@ namespace Aeon.Notifications.Tests
         public void NotificationLevels_MustHaveSixStaticsFields()
         {
             var fieldsCount = typeof(NotificationLevels).GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(INotificationLevel))
-                .Count();
+                .Count(f => f.FieldType == typeof(INotificationLevel));
 
             Assert.IsTrue(fieldsCount == 6, "Probably a new level should be tested");
         }

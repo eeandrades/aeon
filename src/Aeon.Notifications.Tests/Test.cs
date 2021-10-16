@@ -32,10 +32,16 @@ namespace Aeon.Notifications.Tests
     [TestClass]
     public class Test
     {
+        private readonly static Listners.INotificationListner[] SListners = new[]
+        {
+            new Listners.LoggerNotificationListner(null)
+        };
+
+
         [TestMethod]
         public void Exec()
         {
-            INotificationContext notificationContext = new DefaultNotificationContext();
+            INotificationContext notificationContext = new DefaultNotificationContext(SListners); 
             var invite = new InviteClientHandler(notificationContext);
 
             invite.Execute();
